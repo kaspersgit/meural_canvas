@@ -1,4 +1,5 @@
 # Import modules
+import pandas as pd 
 import stringdist
 import random
 import requests
@@ -51,22 +52,18 @@ for i in range(items["count"]):
     art_ids.append(items["data"][i]["id"])
 
 uploads = pd.DataFrame(
-    authors,
-    names,
-    description,
-    art_ids,
-    columns=["author", "name", "description", "art_id"],
+    {"author": authors, "name": names, "description": descriptions, "art_id": art_ids}
 )
 
 # Preview smalles levenshtein distance author
 def preview_author(author="rembrandt"):
     distance = {}
-    for n in filter(None, uploads.authors):
+    for n in filter(None, uploads.author):
         lh = stringdist.levenshtein_norm(author, n)
         distance[n] = lh
 
     chosen_author = min(distance, key=distance.get)
-    art_ids = authors[chosen_author]
+    art_ids = uploads[uploads['author']==chosen_author]['art_id']
     chosen_art_id = random.choice(list(art_ids))
     print(chosen_art_id)
     # preview item found by keyword on device 8292
