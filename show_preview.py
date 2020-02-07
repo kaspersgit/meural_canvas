@@ -4,6 +4,7 @@ import random
 import requests
 import sys
 import json
+import pandas as pd
 
 # set variables
 path_to_json = "/home/pi/Documents/trusted/meural_cred.json"
@@ -31,6 +32,12 @@ def get_uploads(token, path="/user/items?count=50&page=1"):
     return items
 
 
+def get_favorites(token, path="/favorites/items?count=50&page=1"):
+    headers = {"Authorization": "Token " + token}
+    items = requests.get(base_url + path, headers=headers).json()
+    return items
+
+
 def preview_item(token, art_id, path="/devices/8292/preview/"):
     headers = {"Authorization": "Token " + token}
     preview = requests.post(base_url + path + str(art_id), headers=headers).json()
@@ -41,7 +48,7 @@ names = []
 descriptions = []
 art_ids = []
 token = authenticate()
-items = get_uploads(token)
+items = get_favorites(token)
 
 # number of items uploaded in items['count']
 for i in range(items["count"]):
@@ -51,17 +58,13 @@ for i in range(items["count"]):
     art_ids.append(items["data"][i]["id"])
 
 uploads = pd.DataFrame(
-    authors,
-    names,
-    description,
-    art_ids,
-    columns=["author", "name", "description", "art_id"],
+    {"author": authors, "name": names, "description": descriptions, "art_id": art_ids}
 )
 
 # Preview smalles levenshtein distance author
 def preview_author(author="rembrandt"):
     distance = {}
-    for n in filter(None, uploads.authors):
+    for n in filter(None, uploads.author):
         lh = stringdist.levenshtein_norm(author, n)
         distance[n] = lh
 
