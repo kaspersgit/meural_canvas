@@ -28,7 +28,6 @@ def preview_item(token, art_id, path="/devices/8292/preview/"):
 
 # Check if token time exist otherwise authenticate
 if "token_time" not in globals():
-    token, token_time = authenticate()
     # set variables
     path_to_json = "/home/pi/Documents/trusted/meural_cred.json"
 
@@ -37,6 +36,9 @@ if "token_time" not in globals():
 
     username = info["username"]
     password = info["password"]
+
+    # authenticate
+    token, token_time = authenticate()
 # If token is older than 300 seconds than re-authenticate
 elif (token_time - time.time()) > 300:
     token, token_time = authenticate()
