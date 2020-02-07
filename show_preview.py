@@ -1,4 +1,5 @@
 # Import modules
+import pandas as pd 
 import stringdist
 import random
 import requests
@@ -69,7 +70,7 @@ def preview_author(author="rembrandt"):
         distance[n] = lh
 
     chosen_author = min(distance, key=distance.get)
-    art_ids = authors[chosen_author]
+    art_ids = uploads[uploads['author']==chosen_author]['art_id']
     chosen_art_id = random.choice(list(art_ids))
     print(chosen_art_id)
     # preview item found by keyword on device 8292
