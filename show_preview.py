@@ -1,11 +1,15 @@
 # Import modules
 import time
+
+start_time = time.time()
 import stringdist
 import random
 import requests
 import sys
 import json
 import pandas as pd
+
+print("---modules loaded %s seconds ---" % (time.time() - start_time))
 
 # Meural api base url
 base_url = "https://api.meural.com/v0"
