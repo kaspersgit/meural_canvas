@@ -34,7 +34,7 @@ def preview_item(token, art_id, path="/devices/8292/preview/"):
 # Preview smalles levenshtein distance author
 def preview_author(author="rembrandt"):
     distance = {}
-    for n in filter(None, favorites.values()):
+    for n in filter(None, favorites.keys()):
         lh = stringdist.levenshtein_norm(author, n)
         distance[n] = lh
 
