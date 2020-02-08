@@ -5,9 +5,11 @@ start_time = time.time()
 import stringdist
 import random
 import requests
+
+print("---requests loaded %s seconds ---" % (time.time() - start_time))
 import sys
 import json
-import pandas as pd
+import csv
 
 print("---modules loaded %s seconds ---" % (time.time() - start_time))
 
@@ -32,13 +34,13 @@ def preview_item(token, art_id, path="/devices/8292/preview/"):
 # Preview smalles levenshtein distance author
 def preview_author(author="rembrandt"):
     distance = {}
-    for n in filter(None, favorites.author):
+    for n in filter(None, favorites.values()):
         lh = stringdist.levenshtein_norm(author, n)
         distance[n] = lh
 
     chosen_author = min(distance, key=distance.get)
-    art_ids = favorites[favorites["author"] == chosen_author]["art_id"]
-    chosen_art_id = random.choice(list(art_ids))
+    art_ids = favorites[chosen_author]
+    chosen_art_id = random.choice(art_ids)
     print(chosen_art_id)
     # preview item found by keyword on device 8292
     preview_item(token, chosen_art_id)
@@ -67,9 +69,19 @@ elif (token_time - time.time()) > 300:
 # time it
 print("---authenticated %s seconds ---" % (time.time() - start_time))
 
-favorites = pd.read_csv(
-    "/home/pi/Documents/python_scripts/meural_canvas/meural_favorites.csv"
-)
+with open(
+    "/home/pi/Documents/python_scripts/meural_canvas/meural_favorites.csv",
+    mode="r",
+    encoding="utf-8",
+) as infile:
+    reader = csv.reader(infile)
+    favorites = {}
+    for rows in reader:
+        if rows[2] not in favorites.keys():
+            favorites[rows[2]] = [rows[1]]
+        else:
+            favorites[rows[2]].append(rows[1])
+    del favorites["author"]
 
 preview_author(sys.argv[1])
 
