@@ -44,6 +44,7 @@ def preview_author(author="rembrandt"):
     print(chosen_art_id)
     # preview item found by keyword on device 8292
     preview_item(token, chosen_art_id)
+    return(chosen_author)
 
 
 # time it
@@ -83,7 +84,8 @@ with open(
             favorites[rows[2]].append(rows[1])
     del favorites["author"]
 
-preview_author(sys.argv[1])
+author = preview_author(sys.argv[1])
+print("Showing creation made by "+author)
 
 # time it
 print("---finished %s seconds ---" % (time.time() - start_time))
