@@ -4,14 +4,14 @@ import time
 start_time = time.time()
 import stringdist
 import random
-import requests
+from requests import post
 
-print("---requests loaded %s seconds ---" % (time.time() - start_time))
+print("---requests loaded %s seconds ---" % round((time.time() - start_time),2))
 import sys
 import json
 import csv
 
-print("---modules loaded %s seconds ---" % (time.time() - start_time))
+print("---modules loaded %s seconds ---" % round((time.time() - start_time),2))
 
 # Meural api base url
 base_url = "https://api.meural.com/v0"
@@ -47,7 +47,7 @@ def preview_author(author="rembrandt"):
 
 
 # time it
-print("---functions loaded %s seconds ---" % (time.time() - start_time))
+print("---functions loaded %s seconds ---" % round((time.time() - start_time),2))
 
 # Check if token time exist otherwise authenticate
 if "token_time" not in globals():
@@ -67,7 +67,7 @@ elif (token_time - time.time()) > 300:
     token, token_time = authenticate()
 
 # time it
-print("---authenticated %s seconds ---" % (time.time() - start_time))
+print("---authenticated %s seconds ---" % round((time.time() - start_time),2))
 
 with open(
     "/home/pi/Documents/python_scripts/meural_canvas/meural_favorites.csv",
@@ -86,4 +86,4 @@ with open(
 preview_author(sys.argv[1])
 
 # time it
-print("---finished %s seconds ---" % (time.time() - start_time))
+print("---finished %s seconds ---" % round((time.time() - start_time),2))
