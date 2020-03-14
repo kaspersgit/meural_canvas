@@ -93,7 +93,8 @@ with open(
 
 
 artwork_name, author = preview_author(sys.argv[1])
-print("Showing {} made by {}".format(artwork_name, author))
+artwork_name = artwork_name.encode('utf-8')
+print("Showing {} made by {}".format(artwork_name.decode('utf-8'), author))
 
 # time it
 print("---finished %s seconds ---" % round((time.time() - start_time),2))
