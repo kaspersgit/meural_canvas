@@ -18,7 +18,7 @@ base_url = "https://api.meural.com/v0"
 
 # Meural api functions
 def authenticate(path="/authenticate"):
-    req = requests.post(
+    req = post(
         base_url + path, data={"username": username, "password": password}
     ).json()
     token = req["token"]
@@ -28,7 +28,7 @@ def authenticate(path="/authenticate"):
 
 def preview_item(token, art_id, path="/devices/8292/preview/"):
     headers = {"Authorization": "Token " + token}
-    preview = requests.post(base_url + path + str(art_id), headers=headers).json()
+    preview = post(base_url + path + str(art_id), headers=headers).json()
 
 
 # Preview smalles levenshtein distance author
@@ -44,7 +44,7 @@ def preview_author(author="rembrandt"):
     print(chosen_art_id)
     # preview item found by keyword on device 8292
     preview_item(token, chosen_art_id)
-    return(chosen_author)
+    return(author_artwork[chosen_art_id],chosen_author)
 
 
 # time it
@@ -77,15 +77,23 @@ with open(
 ) as infile:
     reader = csv.reader(infile)
     favorites = {}
+    author_artwork = {}
+
     for rows in reader:
+        # To get a dict with authors and art ids
         if rows[2] not in favorites.keys():
             favorites[rows[2]] = [rows[1]]
         else:
             favorites[rows[2]].append(rows[1])
+
+        # To get a dict with art_ids and artwork names
+        author_artwork[rows[1]] = rows[4]
+    del author_artwork["art_id"]
     del favorites["author"]
 
-author = preview_author(sys.argv[1])
-print("Showing creation made by "+author)
+
+artwork_name, author = preview_author(sys.argv[1])
+print("Showing {} made by {}".format(artwork_name, author))
 
 # time it
 print("---finished %s seconds ---" % round((time.time() - start_time),2))
