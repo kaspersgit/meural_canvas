@@ -99,7 +99,7 @@ with open(
 
 
 artwork_name, author = preview_author(sys.argv[1])
-print("Showing {} made by {}".format(artwork_name.encode('utf-8'), author))
+print("Showing {} made by {}".format(artwork_name, author))
 
 
 # time it
