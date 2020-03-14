@@ -1,17 +1,21 @@
 # Import modules
-import time
+# Uncomment for when you want to time the script
+#import time
+#start_time = time.time()
+##
 
-start_time = time.time()
 import stringdist
 import random
 from requests import post
 
-print("---requests loaded %s seconds ---" % round((time.time() - start_time),2))
+# Uncomment for when you want to time the script
+#print("---requests loaded %s seconds ---" % round((time.time() - start_time),2))
 import sys
 import json
 import csv
 
-print("---modules loaded %s seconds ---" % round((time.time() - start_time),2))
+# Uncomment for when you want to time the script
+#print("---modules loaded %s seconds ---" % round((time.time() - start_time),2))
 
 # Meural api base url
 base_url = "https://api.meural.com/v0"
@@ -41,14 +45,15 @@ def preview_author(author="rembrandt"):
     chosen_author = min(distance, key=distance.get)
     art_ids = favorites[chosen_author]
     chosen_art_id = random.choice(art_ids)
-    print(chosen_art_id)
+    #print(chosen_art_id)
     # preview item found by keyword on device 8292
     preview_item(token, chosen_art_id)
     return(author_artwork[chosen_art_id],chosen_author)
 
 
 # time it
-print("---functions loaded %s seconds ---" % round((time.time() - start_time),2))
+# Uncomment for when you want to time the script
+#print("---functions loaded %s seconds ---" % round((time.time() - start_time),2))
 
 # Check if token time exist otherwise authenticate
 if "token_time" not in globals():
@@ -68,7 +73,8 @@ elif (token_time - time.time()) > 300:
     token, token_time = authenticate()
 
 # time it
-print("---authenticated %s seconds ---" % round((time.time() - start_time),2))
+# Uncomment for when you want to time the script
+#print("---authenticated %s seconds ---" % round((time.time() - start_time),2))
 
 with open(
     "/home/pi/Documents/python_scripts/meural_canvas/meural_favorites.csv",
@@ -97,4 +103,5 @@ print("Showing {} made by {}".format(artwork_name.encode('utf-8'), author))
 
 
 # time it
-print("---finished %s seconds ---" % round((time.time() - start_time),2))
+# Uncomment for when you want to time the script
+#print("---finished %s seconds ---" % round((time.time() - start_time),2))
