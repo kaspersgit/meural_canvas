@@ -1,6 +1,8 @@
 # Import modules
+
+import time
+
 # Uncomment for when you want to time the script
-#import time
 #start_time = time.time()
 ##
 
