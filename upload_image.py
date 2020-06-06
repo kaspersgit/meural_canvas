@@ -50,7 +50,7 @@ def resize_image(original_image):
     resize_ratios = [meural_res[0]/w, meural_res[1]/h]
     resize_size = [None] * 2
     for i,j in enumerate(resize_ratios):
-        print(f'Does dimension {i} need to be resized? ' + str(j == max(resize_ratios)))
+        print('Does dimension {} need to be resized? '.format(i) + str(j == max(resize_ratios)))
         if j == max(resize_ratios):
             resize_size[i]=int(1 * meural_res[i])
         else:
