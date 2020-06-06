@@ -37,7 +37,6 @@ def resize_image(original_image):
     meural_res = [1920,1080]
     aspect_ratio_meural = meural_res[0]/meural_res[1]
 
-    image = Image.open('image_now.jpg')
     # resolution of image
     w, h = image.size
     if (w < meural_res[0]) | (h < meural_res[1]):
@@ -118,6 +117,8 @@ image_url = sys.argv[1]
 # calling urlretrieve function to get resource
 urllib.request.urlretrieve(image_url, filename)
 
+image = Image.open('image_now.jpg')
+final_image = resize_image(image)
 final_image.save('resized_image.jpg')
 response = upload_image(token,"/Users/kasper.de-harder/Downloads/resized_image.jpg")
 preview_item(token, art_id = response['data']['id'])
