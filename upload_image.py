@@ -15,6 +15,7 @@ from PIL import Image
 # Uncomment for when you want to time the script
 #print("---requests loaded %s seconds ---" % round((time.time() - start_time),2))
 import sys
+import os
 import json
 import csv
 
