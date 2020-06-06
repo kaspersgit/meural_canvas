@@ -121,8 +121,11 @@ urllib.request.urlretrieve(image_url, filename)
 
 image = Image.open(current_wd+'/image_now.jpg')
 final_image = resize_image(image)
-final_image.save(current_wd+'/resized_image.jpg')
-response = upload_image(token, current_wd+"/resized_image.jpg")
+
+image_name = os.path.splitext(image_url)[0][-10:]
+image_path = current_wd+'/'+image_name+'.jpg'
+final_image.save(image_path)
+response = upload_image(token, image_path)
 preview_item(token, art_id = response['data']['id'])
 
 ###########################################################
