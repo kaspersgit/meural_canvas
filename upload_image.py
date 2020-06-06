@@ -111,16 +111,17 @@ urllib.request.install_opener(opener)
 
 #%%
 # setting filename and image URL
-filename = 'image_now.jpg'
+current_wd = os.getcwd()
+filename = current_wd+'/image_now.jpg'
 image_url = sys.argv[1]
 
 # calling urlretrieve function to get resource
 urllib.request.urlretrieve(image_url, filename)
 
-image = Image.open('image_now.jpg')
+image = Image.open(current_wd+'/image_now.jpg')
 final_image = resize_image(image)
-final_image.save('resized_image.jpg')
-response = upload_image(token,"/Users/kasper.de-harder/Downloads/resized_image.jpg")
+final_image.save(current_wd+'/resized_image.jpg')
+response = upload_image(token, current_wd+"/resized_image.jpg")
 preview_item(token, art_id = response['data']['id'])
 
 ###########################################################
